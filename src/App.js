@@ -7,7 +7,7 @@ function App() {
 
   useEffect(() => {
     fetch('/filter').then(res => res.json()).then(data => {
-      setCurrentTime(data.testvar);
+      setVar(data.testvar);
     });
   }, []);
 
