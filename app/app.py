@@ -1,10 +1,13 @@
 from flask import Flask
 import pandas as pd
 from flask_sqlalchemy import SQLAlchemy
-
+from models import Variables
+from sql_db_instance import db
 
 
 app = Flask(__name__)
+
+
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///applicants.sqlite"
 db = SQLAlchemy(app)
 
@@ -24,10 +27,13 @@ def setup_database(app):
         return
 
 
-def call_filter(app):
 
-    @app.route('/filter')
-    def filter():
-        print('this is callfilter')
-        testvariable = 28
-        return {'testvar': testvariable}
+
+@app.route('/filter')
+def filter():
+    print('this is callfilter')
+    income_var = (db.session.query(Variables).filter(Variables.age >= 58))
+    testvariable = [variable.name for variable in income_var]
+
+    return {'testvar': testvariable}
+
